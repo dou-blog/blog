@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>代码高亮演示</title>
+    <style>
+        .pre-wrapper {
+            position: relative;
+        }
+ 
+        .pre-wrapper pre {
+            padding-top: 25px;
+        }
+ 
+        .pre-wrapper .copy-snippet {
+            border-radius: 0;
+            min-width: 55px;
+            background: none repeat scroll 0 0 transparent;
+            border: 1px solid #bbb;
+            color: #26589F;
+            font-family: 'HELEVETICA', sans-serif;
+            font-size: 12px;
+            font-weight: normal;
+            line-height: 1.42rem;
+            margin: 0;
+            padding: 0px 5px;
+            text-align: center;
+            text-decoration: none;
+            text-indent: 0;
+            position: absolute;
+            background: #ccc;
+            top: 5px;
+            right: 5px;
+            cursor: pointer;
+        }
+ 
+        .pre-wrapper:hover .copy-snippet{
+            display: block;
+        }
+ 
+        .pre-wrapper  .copy-snippet:disabled {
+            color: #555;
+        }
+        .pre-wrapper .copy-snippet{
+            display: none;
+        }
+    </style>
+    <script src="jquery.min.js"></script>
+    <link rel="stylesheet" href="prettify.css">
+    <script src="prettify.js"></script>
+    <script>
+        function copy(str = '', callback) {
+            const element = document.createElement('textarea');
+            element.value = str;
+            element.addEventListener('copy', (e) => {
+                e.stopPropagation();
+                if (e.clipboardData) {
+                    e.preventDefault();
+                    e.clipboardData.clearData();
+                    e.clipboardData.setData('text/plain', str);
+                }
+            });
+            document.body.appendChild(element);
+            //选中需要复制的内容
+            element.select();
+            //执行复制
+            document.execCommand('copy');
+            //删除dom
+            element.remove();
+            if (typeof callback === 'function') {
+                callback();
+            }
+        }
+        jQuery(document).ready(function ($) {
+            let copyid = 0;
+            $('pre').each(function () {
+                copyid++;
+                $(this).attr('data-copyid', copyid).wrap('<div class="pre-wrapper"/>');
+                $(this).parent().css('margin', $(this).css('margin'));
+                $('<button class="copy-snippet">复制</button>').insertAfter($(this)).data('copytarget', copyid);
+            });
+            $('body').on('click', '.copy-snippet', function (ev) {
+                ev.preventDefault();
+                const $copyButton = $(this);
+                $pre = $(document).find('pre[data-copyid=' + $copyButton.data('copytarget') + ']');
+                if ($pre.length) {
+                    try {
+                        copy($pre[0].innerText);
+                        $copyButton.text('复制成功').prop('disabled', true);
+                    } catch (e) {
+                        $copyButton.text('复制失败').prop('disabled', true);
+                    }
+                    setTimeout(function () {
+                        $copyButton.text('复制').prop('disabled', false);
+                    }, 3000);
+                }
+            });
+        });
+    </script>
+</head>
+<body>
+
+<h5>32位镜像</h5>
+<pre>wget -O ik.iso https://doudou8doudou.github.io/cloudos/ik/ik32.iso</pre>
+
+<h5>64位镜像</h5>
+<pre>wget -O ik.iso https://doudou8doudou.github.io/cloudos/ik/ik64.iso</pre>
+
+<h5>vnc</h5>
+<pre>loopback loop (hd0,msdos1)/root/ik.iso
+linux (loop)/boot/vmlinuz bootguide=cd
+initrd (loop)/boot/rootfs
+boot
+</pre> 
+</body>
+</html>
