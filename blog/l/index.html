@@ -105,20 +105,14 @@
 <h1>CentOS 7关闭防火墙命令</h1>
 <pre>systemctl stop firewalld.service && systemctl disable firewalld.service && systemctl mask firewalld.service</pre>
 
-<h5>64位镜像</h5>
-<pre>wget https://download.mikrotik.com/routeros/6.48.4/chr-6.48.4.img.zip -O chr.img.zip && \
-gunzip -c chr.img.zip > chr.img && \
-mount -o loop,offset=33554944 chr.img /mnt && \
-ADDRESS0=`ip addr show eth0 | grep global | cut -d' ' -f 6 | head -n 1` && \
-GATEWAY0=`ip route list | grep default | cut -d' ' -f 3` && \
-echo "/ip address add address=$ADDRESS0 interface=[/interface ethernet find where name=ether1]
-/ip route add gateway=$GATEWAY0
-/user add name=wendy password=Wd8264.. group=full;/user disable admin;
-" > /mnt/rw/autorun.scr && \
-umount /mnt && \
-echo u > /proc/sysrq-trigger && \
-dd if=chr.img bs=1024 of=/dev/vda && \
-reboot
+<h5>Nginx宝塔下载服务器配置</h5>
+<pre>    location / {
+    root /www/wwwroot/目录;
+    autoindex on; # 开启目录浏览
+    autoindex_localtime on; # 显示时间
+    autoindex_exact_size off; # 显示想要的单位
+    charset utf-8,gbk; # 防止中文乱码
+    }
 </pre>
 
 <h5>vnc</h5>
