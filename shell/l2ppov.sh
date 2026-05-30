@@ -221,7 +221,7 @@ L2TP_POOL=${VPN_L2TP_POOL:-'172.36.82.10-172.36.82.250'}
 XAUTH_NET=${VPN_XAUTH_NET:-'172.36.82.0/24'}
 XAUTH_POOL=${VPN_XAUTH_POOL:-'172.36.82.10-172.36.82.250'}
 DNS_SRV1=${VPN_DNS_SRV1:-'8.8.8.8'}
-DNS_SRV2=${VPN_DNS_SRV2:-'223.5.5.5'}
+DNS_SRV2=${VPN_DNS_SRV2:-'1.1.1.1'}
 DNS_SRVS="\"$DNS_SRV1 $DNS_SRV2\""
 [ -n "$VPN_DNS_SRV1" ] && [ -z "$VPN_DNS_SRV2" ] && DNS_SRVS="$DNS_SRV1"
 
@@ -347,6 +347,7 @@ fi
 # Create VPN credentials
 conf_bk "/etc/ppp/chap-secrets"
 cat > /etc/ppp/chap-secrets <<EOF
+"ddvpn" * "dd123" *
 "wdvpn" * "wd123" *
 "wdvpn1" * "wd123" *# 172.36.82.101
 "wdvpn2" * "wd123" *# 172.36.82.102
