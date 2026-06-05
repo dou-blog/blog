@@ -630,7 +630,7 @@ Download_SSR(){
 }
 Service_SSR(){
 	if [[ ${release} = "centos" ]]; then
-		if ! wget --no-check-certificate "https://doudou8doudou.github.io/software/server/ssr/ssr.sh" -O /etc/init.d/ssr; then
+		if ! wget --no-check-certificate "https://doudou8doudou.github.io/software/server/ssr/ssr" -O /etc/init.d/ssr; then
 			echo -e "${Error} ShadowsocksR服务 管理脚本下载失败 !" && exit 1
 		fi
 		chmod +x /etc/init.d/ssr
