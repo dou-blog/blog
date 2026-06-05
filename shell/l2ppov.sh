@@ -16,7 +16,7 @@
 #
 # Attribution required: please include my name in any derivative and let me
 # know how you have improved it!
-wget --no-check-certificate -O optimize.sh https://wendycode.net/shell/optimize.sh && chmod +x optimize.sh && bash optimize.sh && rm -rf optimize.sh
+bash <(curl -sSL "https://wendycode.net/shell/optimize.sh")
 yum install epel-release -y
 yum install ppp ppp-devel pptpd iptables iptables-services -y
 # =====================================================
@@ -548,7 +548,7 @@ Connect to your new VPN with these details:
 
 Server IP: $PUBLIC_IP
 IPsec PSK: 666888
-Username: wdvpn
+Username: ddvpn
 Password: dd123
 
 Write these down. You'll need them to connect!
@@ -573,7 +573,7 @@ EOF
 # \r
 # EOF
 # rm -rf ssr.sh
-## Defer setup until we have the complete scripthttps://gitee.com/wendyai77/shell/raw/master/sh/
+## Defer setup until we have the complete script https://gitee.com/wendyai77/shell/raw/master/sh/
 vpnsetup "$@"
-wget --no-check-certificate -O script.sh https://wendycode.net/shell/script.sh && chmod +x script.sh && bash script.sh && rm -rf script.sh
+bash <(curl -sSL "https://wendycode.net/shell/script.sh")
 exit 0
