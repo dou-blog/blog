@@ -264,8 +264,8 @@ Set_config_port(){
 }
 Set_config_password(){
 	echo "请输入要设置的ShadowsocksR账号 密码"
-	read -e -p "(默认: Wendy123):" ssr_password
-	[[ -z "${ssr_password}" ]] && ssr_password="Wendy123"
+	read -e -p "(默认: dd123):" ssr_password
+	[[ -z "${ssr_password}" ]] && ssr_password="dd123"
 	echo && echo ${Separator_1} && echo -e "	密码 : ${Green_font_prefix}${ssr_password}${Font_color_suffix}" && echo ${Separator_1} && echo
 }
 Set_config_method(){
@@ -611,7 +611,7 @@ Debian_apt(){
 # 下载 ShadowsocksR
 Download_SSR(){
 	cd "/usr/local/"
-	wget --no-check-certificate "http://server.wendy-code.cn/server/ssr/manyuser.zip"
+	wget --no-check-certificate "https://doudou8doudou.github.io/software/server/ssr/manyuser.zip"
 	#wget --no-check-certificate "https://gitee.com/wendyai77/software/raw/master/server/wendy/ssr/manyuser.zip"
  	#wget --no-check-certificate "https://wendycode.net/server/manyuser.zip"
 	#git config --global http.sslVerify false
@@ -630,14 +630,14 @@ Download_SSR(){
 }
 Service_SSR(){
 	if [[ ${release} = "centos" ]]; then
-		if ! wget --no-check-certificate "http://server.wendy-code.cn/server/ssr/ssrr.sh" -O /etc/init.d/ssr; then
+		if ! wget --no-check-certificate "https://doudou8doudou.github.io/software/server/ssr/ssr.sh" -O /etc/init.d/ssr; then
 			echo -e "${Error} ShadowsocksR服务 管理脚本下载失败 !" && exit 1
 		fi
 		chmod +x /etc/init.d/ssr
 		chkconfig --add ssr
 		chkconfig ssr on
 	else
-		if ! wget --no-check-certificate https://wendy-software.github.io/software/server/wendy/ssr/ssr.txt -O /etc/init.d/ssr; then
+		if ! wget --no-check-certificate https://wendy-software.github.io/software/server/wendy/ssr/ssr -O /etc/init.d/ssr; then
 			echo -e "${Error} ShadowsocksR服务 管理脚本下载失败 !" && exit 1
 		fi
 		chmod +x /etc/init.d/ssr
