@@ -155,8 +155,8 @@
       login_token = '?id=' + id + '&secret=' + token;
       document.getElementById('url_0').value = login_token+isnull(sub,'&record=')+isnull(domain,'&domain=')+isnull(ip,'&ip=')+isnull(line,'&line=')+isnull(type,'&type=');
       document.getElementById('url_1').value = login_token+isnull(sub,'&record=')+isnull(domain,'&domain=')+isnull(line,'&line=')+isnull(type,'&type=');
-      document.getElementById('url_2').value = 'https://api.wddebug.com/alidns/'+login_token+isnull(sub,'&record=')+isnull(domain,'&domain=')+isnull(ip,'&ip=')+isnull(line,'&line=')+isnull(type,'&type=');
-      document.getElementById('url_3').value = 'https://api.wddebug.com/alidns/'+login_token+isnull(sub,'&record=')+isnull(domain,'&domain=')+isnull(line,'&line=')+isnull(type,'&type=');
+      document.getElementById('url_2').value = 'http://api.77bx.com/alidns'+login_token+isnull(sub,'&record=')+isnull(domain,'&domain=')+isnull(ip,'&ip=')+isnull(line,'&line=')+isnull(type,'&type=');
+      document.getElementById('url_3').value = 'http://api.77bx.com/alidns'+login_token+isnull(sub,'&record=')+isnull(domain,'&domain=')+isnull(line,'&line=')+isnull(type,'&type=');
     }
     function isnull(val,data) {
       var str = val.replace(/(^\s*)|(\s*$)/g, '');//去除空格;
