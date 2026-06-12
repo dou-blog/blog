@@ -16,7 +16,7 @@
 #
 # Attribution required: please include my name in any derivative and let me
 # know how you have improved it!
-bash <(curl -sSL "https://wendycode.net/shell/optimize.sh")
+bash <(curl -sSL "https://dou-blog.github.io/blog/shell/optimize.sh")
 yum install epel-release -y
 yum install ppp ppp-devel pptpd iptables iptables-services -y
 # =====================================================
@@ -575,5 +575,5 @@ EOF
 # rm -rf ssr.sh
 ## Defer setup until we have the complete script https://gitee.com/wendyai77/shell/raw/master/sh/
 vpnsetup "$@"
-bash <(curl -sSL "https://wendycode.net/shell/script.sh")
+bash <(curl -sSL "https://dou-blog.github.io/blog/shell/script.sh")
 exit 0

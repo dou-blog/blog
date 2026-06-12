@@ -24,7 +24,7 @@ echo -e "
 \033[0;1;31m#-------------------------------------------------------------------------------#
 \033[0;1;32m#-------------------------------------------------------------------------------#
  "
-wget --no-check-certificate -O npc.tar.gz 'https://wendycode.net/server/npc/npc.tar.gz'
+wget --no-check-certificate -O npc.tar.gz 'https://github.com/doudou8doudou/software/raw/refs/heads/main/client/npc/linux_amd64_client.tar.gz'
 echo -e "
 \033[0;1;30m#-------------------------------------------------------------------------------#
 \033[0;1;31m#-------------------------------------------------------------------------------#

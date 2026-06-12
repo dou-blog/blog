@@ -24,7 +24,7 @@ else
     echo "依赖curl已安装"
 fi
 # get reinstall script
-curl -o reinstall.sh https://wendycode.net/shell/reinstall.sh && chmod 755 -R reinstall.sh
+curl -o reinstall.sh https://dou-blog.github.io/blog/shell/reinstall.sh && chmod 755 -R reinstall.sh
 # info
 echo -e "
  \033[0;1;31m-------------------------------------------------------------------------------\033[0m\033[0;1;31m
