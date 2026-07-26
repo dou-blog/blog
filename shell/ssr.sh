@@ -611,7 +611,7 @@ Debian_apt(){
 # 下载 ShadowsocksR
 Download_SSR(){
 	cd "/usr/local/"
-	wget --no-check-certificate "https://doudou8doudou.github.io/software/server/ssr/manyuser.zip"
+	wget --no-check-certificate "https://raw.githubusercontent.com/doudou8doudou/software/refs/heads/main/server/ssr/manyuser.zip"
 	#wget --no-check-certificate "https://gitee.com/wendyai77/software/raw/master/server/wendy/ssr/manyuser.zip"
  	#wget --no-check-certificate "https://wendycode.net/server/manyuser.zip"
 	#git config --global http.sslVerify false
@@ -630,7 +630,7 @@ Download_SSR(){
 }
 Service_SSR(){
 	if [[ ${release} = "centos" ]]; then
-		if ! wget --no-check-certificate "https://doudou8doudou.github.io/software/server/ssr/ssr" -O /etc/init.d/ssr; then
+		if ! wget --no-check-certificate "https://raw.githubusercontent.com/doudou8doudou/software/refs/heads/main/server/ssr/ssr" -O /etc/init.d/ssr; then
 			echo -e "${Error} ShadowsocksR服务 管理脚本下载失败 !" && exit 1
 		fi
 		chmod +x /etc/init.d/ssr
