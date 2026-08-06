@@ -139,7 +139,7 @@ PUBLIC_IP=${VPN_PUBLIC_IP:-''}
 
 [ -z "$PUBLIC_IP" ] && PUBLIC_IP=$(curl -s http://members.3322.org/dyndns/getip)
 
-check_ip "$PUBLIC_IP" || PUBLIC_IP=$(curl -s http://members.3322.org/dyndns/getip)
+check_ip "$PUBLIC_IP" || PUBLIC_IP=$(curl -s ipinfo.io/ip)
 check_ip "$PUBLIC_IP" || exiterr "Cannot detect this server's public IP. Edit the script and manually enter it."
 
 bigecho "Adding the EPEL repository..."
