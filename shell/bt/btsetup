@@ -1,0 +1,25 @@
+#! /usr/bin/env expect
+# 开启一个程序
+spawn bt
+# 捕获相关内容
+expect {
+        "请输入命令编号：" { send "8\r";exp_continue }
+        "请输入新的面板端口：" { send "28888\r" }
+}
+interact  //交互
+# 开启一个程序
+spawn bt
+# 捕获相关内容
+expect {
+        "请输入命令编号：" { send "6\r";exp_continue }
+        "请输入新的面板用户名(≥3位)：" { send "wendy\r" }
+}
+interact  //交互
+# 开启一个程序
+spawn bt
+# 捕获相关内容
+expect {
+        "请输入命令编号：" { send "5\r";exp_continue }
+        "请输入新的面板密码：" { send "Wd8264..\r" }
+}
+interact  //交互
