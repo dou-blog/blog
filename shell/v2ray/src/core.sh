@@ -120,7 +120,8 @@ pause() {
 }
 
 get_uuid() {
-    tmp_uuid=$(cat /proc/sys/kernel/random/uuid)
+    #tmp_uuid=$(cat /proc/sys/kernel/random/uuid)
+    tmp_uuid=61bf260d-bbd6-4958-bbc9-9b76467cd035
 }
 
 get_ip() {
