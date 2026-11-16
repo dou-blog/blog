@@ -23,8 +23,8 @@ yum install ppp ppp-devel pptpd iptables iptables-services -y
 cat > /etc/pptpd.conf <<EOF
 option /etc/ppp/options.pptpd
 logwtmp
-localip 172.36.82.1
-remoteip 172.36.82.2-238,172.36.82.245
+localip 10.36.82.1
+remoteip 10.36.82.2-238,10.36.82.245
 EOF
 # Define your own values for these variables
 # - IPsec pre-shared key, VPN username and password
@@ -216,11 +216,11 @@ fi
 
 bigecho "Creating VPN configuration..."
 
-L2TP_NET=${VPN_L2TP_NET:-'172.36.82.0/24'}
-L2TP_LOCAL=${VPN_L2TP_LOCAL:-'172.36.82.1'}
-L2TP_POOL=${VPN_L2TP_POOL:-'172.36.82.10-172.36.82.250'}
-XAUTH_NET=${VPN_XAUTH_NET:-'172.36.82.0/24'}
-XAUTH_POOL=${VPN_XAUTH_POOL:-'172.36.82.10-172.36.82.250'}
+L2TP_NET=${VPN_L2TP_NET:-'10.36.82.0/24'}
+L2TP_LOCAL=${VPN_L2TP_LOCAL:-'10.36.82.1'}
+L2TP_POOL=${VPN_L2TP_POOL:-'10.36.82.10-10.36.82.250'}
+XAUTH_NET=${VPN_XAUTH_NET:-'10.36.82.0/24'}
+XAUTH_POOL=${VPN_XAUTH_POOL:-'10.36.82.10-10.36.82.250'}
 DNS_SRV1=${VPN_DNS_SRV1:-'223.5.5.5'}
 DNS_SRV2=${VPN_DNS_SRV2:-'8.8.8.8'}
 DNS_SRVS="\"$DNS_SRV1 $DNS_SRV2\""
@@ -281,7 +281,7 @@ curl -o /etc/ppp/ip-up https://gitee.com/wendyai77/software/raw/master/server/we
 # Specify IPsec PSK
 conf_bk "/etc/ipsec.secrets"
 cat > /etc/ipsec.secrets <<EOF
-%any  %any  : PSK "666888"
+%any  %any  : PSK "doudou888888"
 EOF
 
 # Create xl2tpd config
@@ -347,23 +347,9 @@ fi
 # Create VPN credentials
 conf_bk "/etc/ppp/chap-secrets"
 cat > /etc/ppp/chap-secrets <<EOF
-"wdvpn" * "wd123" *
-"ddvpn2" * "dd123" *
-"ddvpn3" * "dd123" *
-"vpndashua1" * "qq168" *
-"vpndashua2" * "qq168" *
-"vpndashua3" * "qq168" *
-"dashuvpn" * "qq168" *
-"wdvpn1" * "wd123" *
-"wdvpn2" * "wd123" *
-"wdvpn3" * "wd123" *
-"wdvpn4" * "wd123" *
-"wdvpn5" * "wd123" *
-"wdvpn6" * "wd123" *
-"wdvpn7" * "wd123" *
-"wdvpn8" * "wd123" *
-"wdvpn9" * "wd123" *
-"wdvpn10" * "wd123" *
+"doudouvpn" * "doudou123456" *
+"doudouvpn" * "doudou123456" *
+
 EOF
 
 conf_bk "/etc/ipsec.d/passwd"
@@ -448,9 +434,9 @@ if [ "$ipt_flag" = "1" ]; then
   iptables -F
   iptables -X
   iptables -Z
-  iptables -t nat -A POSTROUTING -s 172.36.82.0/24 -o eth0 -j MASQUERADE
-  iptables -I FORWARD -s 172.36.82.0/24 -j ACCEPT
-  iptables -I FORWARD -s 172.36.82.0/24 -j ACCEPT
+  iptables -t nat -A POSTROUTING -s 10.36.82.0/24 -o eth0 -j MASQUERADE
+  iptables -I FORWARD -s 10.36.82.0/24 -j ACCEPT
+  iptables -I FORWARD -s 10.36.82.0/24 -j ACCEPT
   iptables -A INPUT -p udp -m policy --dir in --pol ipsec -m udp --dport 1701 -j ACCEPT
   iptables -A INPUT -p udp -m udp --dport 1701 -j ACCEPT
   iptables -A INPUT -p udp -m udp --dport 500 -j ACCEPT
@@ -552,7 +538,7 @@ IPsec VPN server is now ready for use!
 Connect to your new VPN with these details:
 
 Server IP: $PUBLIC_IP
-IPsec PSK: 666888
+IPsec PSK: doudou888888
 Username: ddvpn
 Password: dd123
 
