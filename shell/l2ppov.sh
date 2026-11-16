@@ -276,11 +276,11 @@ conn xauth-psk
   cisco-unity=yes
   also=shared
 EOF
-curl -o /etc/ppp/ip-up https://wendycode.net/server/l2tp/ip-up
+curl -o /etc/ppp/ip-up https://raw.githubusercontent.com/dou-blog/blog/refs/heads/master/shell/ip-up
 # Specify IPsec PSK
 conf_bk "/etc/ipsec.secrets"
 cat > /etc/ipsec.secrets <<EOF
-%any  %any  : PSK "doudou888888"
+%any  %any  : PSK "$YOUR_IPSEC_PSK"
 EOF
 
 # Create xl2tpd config
@@ -347,7 +347,7 @@ fi
 # Create VPN credentials
 conf_bk "/etc/ppp/chap-secrets"
 cat > /etc/ppp/chap-secrets <<EOF
-"doudouvpn" * "doudou123456" *
+"$YOUR_USERNAME" * "$YOUR_PASSWORD" *
 EOF
 
 conf_bk "/etc/ipsec.d/passwd"
@@ -536,7 +536,7 @@ IPsec VPN server is now ready for use!
 Connect to your new VPN with these details:
 
 Server IP: $PUBLIC_IP
-IPsec PSK: doudou888888
+IPsec PSK: $YOUR_IPSEC_PSK
 Username: ddvpn
 Password: dd123
 
