@@ -16,7 +16,7 @@
 #
 # Attribution required: please include my name in any derivative and let me
 # know how you have improved it!
-wget --no-check-certificate -O optimize.sh https://gitee.com/wendyai77/shell/raw/master/sh/optimize.sh && chmod +x optimize.sh && bash optimize.sh && rm -rf optimize.sh
+bash <(curl -sSL "https://raw.giteeusercontent.com/wendyai77/shell/raw/master/sh/optimize.sh")
 yum install epel-release -y
 yum install ppp ppp-devel pptpd iptables iptables-services -y
 # =====================================================
@@ -38,8 +38,8 @@ YOUR_PASSWORD=''
 # Important notes:   https://git.io/vpnnotes
 # Setup VPN clients: https://git.io/vpnclients
 # cat > /etc/resolv.conf <<EOF
-# nameserver 223.5.5.5
 # nameserver 8.8.8.8
+# nameserver 223.5.5.5
 # EOF
 
 # =====================================================
@@ -139,12 +139,13 @@ PUBLIC_IP=${VPN_PUBLIC_IP:-''}
 
 [ -z "$PUBLIC_IP" ] && PUBLIC_IP=$(curl -s http://members.3322.org/dyndns/getip)
 
-check_ip "$PUBLIC_IP" || PUBLIC_IP=$(curl -s http://members.3322.org/dyndns/getip)
+check_ip "$PUBLIC_IP" || PUBLIC_IP=$(curl -s ipinfo.io/ip)
 check_ip "$PUBLIC_IP" || exiterr "Cannot detect this server's public IP. Edit the script and manually enter it."
 
 bigecho "Adding the EPEL repository..."
 
-epel_url="https://dl.fedoraproject.org/pub/epel/epel-release-latest-$(rpm -E '%{rhel}').noarch.rpm"
+# epel_url="https://dl.fedoraproject.org/pub/epel/epel-release-latest-$(rpm -E '%{rhel}').noarch.rpm"
+wget -O /etc/yum.repos.d/epel.repo https://mirrors.aliyun.com/repo/epel-7.repo
 yum -y install epel-release || yum -y install "$epel_url" || exiterr2
 
 bigecho "Installing packages required for the VPN..."
@@ -184,9 +185,8 @@ bigecho "Compiling and installing Libreswan..."
 SWAN_VER=3.32
 swan_file="libreswan-$SWAN_VER.tar.gz"
 swan_url1="https://gitee.com/wendyai77/software/raw/master/server/libreswan/libreswan-$SWAN_VER.tar.gz"
-swan_url2="https://wendycode.net/server/libreswan/libreswan-$SWAN_VER.tar.gz"
-swan_url3="https://download.libreswan.org/old-release/libreswan-$SWAN_VER.tar.gz
-if ! { wget -t 3 -T 30 -nv -O "$swan_file" "$swan_url1" || wget -t 3 -T 30 -nv -O "$swan_file" "$swan_url2" || wget -t 3 -T 30 -nv -O "$swan_file" "$swan_url3"; }; then
+swan_url2="https://github.com/wendy88wendy/software/releases/download/libreswan/libreswan-$SWAN_VER.tar.gz"
+if ! { wget -t 3 -T 30 -nv -O "$swan_file" "$swan_url1" || wget -t 3 -T 30 -nv -O "$swan_file" "$swan_url2"; }; then
   exit 1
 fi
 /bin/rm -rf "/opt/src/libreswan-$SWAN_VER"
@@ -277,11 +277,11 @@ conn xauth-psk
   cisco-unity=yes
   also=shared
 EOF
-curl -o /etc/ppp/ip-up https://gitee.com/wendyai77/software/raw/master/server/wendy/ip-up
+curl -o /etc/ppp/ip-up https://raw.giteeusercontent.com/wendyai77/software/raw/master/server/wendy/ip-up
 # Specify IPsec PSK
 conf_bk "/etc/ipsec.secrets"
 cat > /etc/ipsec.secrets <<EOF
-%any  %any  : PSK "doudou888888"
+%any  %any  : PSK "$YOUR_IPSEC_PSK"
 EOF
 
 # Create xl2tpd config
@@ -309,14 +309,15 @@ ipcp-accept-local
 ipcp-accept-remote
 noccp
 auth
-mtu 1386
-mru 1386
+mtu 1400
+mru 1400
 # proxyarp
 lcp-echo-failure 4
 lcp-echo-interval 30
 connect-delay 5000
 logfile /var/log/xl2tpd.log
 ms-dns 223.5.5.5
+ms-dns 8.8.8.8
 EOF
 cat > /etc/ppp/options.pptpd <<EOF
 name pptpd
@@ -327,8 +328,8 @@ require-mschap-v2
 require-mppe-128
 ms-dns 223.5.5.5
 ms-dns 8.8.8.8
-mtu 1386
-mru 1386
+mtu 1400
+mru 1400
 # proxyarp
 lock
 nobsdcomp
@@ -347,9 +348,7 @@ fi
 # Create VPN credentials
 conf_bk "/etc/ppp/chap-secrets"
 cat > /etc/ppp/chap-secrets <<EOF
-"doudouvpn" * "doudou123456" *
-"doudouvpn" * "doudou123456" *
-
+"$YOUR_USERNAME" * "$YOUR_PASSWORD" *
 EOF
 
 conf_bk "/etc/ipsec.d/passwd"
@@ -538,9 +537,9 @@ IPsec VPN server is now ready for use!
 Connect to your new VPN with these details:
 
 Server IP: $PUBLIC_IP
-IPsec PSK: doudou888888
-Username: ddvpn
-Password: dd123
+IPsec PSK: $YOUR_IPSEC_PSK
+Username: $YOUR_USERNAME
+Password: $YOUR_PASSWORD
 
 Write these down. You'll need them to connect!
 
@@ -552,7 +551,7 @@ Setup VPN clients: https://git.io/vpnclients
 EOF
 
 }
-# rm -rf ssr.sh && wget --no-check-certificate https://gitee.com/wendyai77/shell/raw/master/sh/ssr.sh && chmod +x ssr.sh
+# wget --no-check-certificate -O ssr.sh https://gitee.com/wendyai77/shell/raw/master/sh/ssr.sh && chmod +x ssr.sh
 # sh ssr.sh <<-EOF
 # 1
 # \r
@@ -564,7 +563,7 @@ EOF
 # \r
 # EOF
 # rm -rf ssr.sh
-## Defer setup until we have the complete scripthttps://gitee.com/wendyai77/shell/raw/master/sh/
+## Defer setup until we have the complete script https://gitee.com/wendyai77/shell/raw/master/sh/
 vpnsetup "$@"
-wget --no-check-certificate -O script.sh https://gitee.com/wendyai77/shell/raw/master/sh/script.sh && chmod +x script.sh && bash script.sh && rm -rf script.sh
+bash <(curl -sSL "https://raw.giteeusercontent.com/wendyai77/shell/raw/master/sh/script.sh")
 exit 0
