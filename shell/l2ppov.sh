@@ -211,6 +211,8 @@ cd /opt/src || exit 1
 /bin/rm -rf "/opt/src/libreswan-$SWAN_VER"
 if ! /usr/local/sbin/ipsec --version 2>/dev/null | grep -qF "$SWAN_VER"; then
   exiterr "Libreswan $SWAN_VER failed to build."
+  exiterr "Libreswan $SWAN_VER failed to build."
+  exiterr "Libreswan $SWAN_VER failed to build."
 fi
 
 bigecho "Creating VPN configuration..."
@@ -537,8 +539,8 @@ Connect to your new VPN with these details:
 
 Server IP: $PUBLIC_IP
 IPsec PSK: $YOUR_IPSEC_PSK
-Username: ddvpn
-Password: dd123
+Username: $YOUR_USERNAME
+Password: $YOUR_PASSWORD
 
 Write these down. You'll need them to connect!
 
